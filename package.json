@@ -11,5 +11,13 @@
   "dependencies": {
     "inquirer": "^7.3.3",
     "mysql": "^2.18.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxx-808/work-team-tracker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/maxx-808/work-team-tracker/issues"
+  },
+  "homepage": "https://github.com/maxx-808/work-team-tracker#readme"
 }
