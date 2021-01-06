@@ -23,8 +23,10 @@ const start = () => {
       message: "What would you like to do?",
       choices: [
         "view employees",
-        "view employees by department",
-        "view employees by manager",
+        "view department",
+        "view role",
+        "add department",
+        "add role",
         "add employee",
         "remove employee",
         "update employee role",
@@ -36,11 +38,17 @@ const start = () => {
         case "view employees":
           allEmp();
           break;
-        case "view employees by department":
-          allEmpDept();
+        case "view department":
+          allDept();
           break;
-        case "view employees by manager":
-          allEmpMang();
+        case "view role":
+          allRoles();
+          break;
+        case "add department":
+          addDept();
+          break;
+        case "add role":
+          addRole();
           break;
         case "add employee":
           addEmp();
@@ -71,14 +79,86 @@ const allEmp = () => {
   });
 };
 
-//function for showing all employees based on department
-const allEmpDept = () => {
-  const query = "SELECT * FROM employee_table GROUP BY department_id";
-  connection.query(query, (err, resDe) => {
+//function for showing all departments
+const allDept = () => {
+  const query = "SELECT * FROM department_table";
+  connection.query(query, (err, resDept) => {
     if (err) throw err;
-    console.table(resDe);
+    console.table(resDept);
     start();
   });
+};
+
+//function for showing all roles
+const allRoles = () => {
+  const query = "SELECT * FROM role_table";
+  connection.query(query, (err, resRole) => {
+    if (err) throw err;
+    console.table(resRole);
+    start();
+  });
+};
+
+//function adding new departments
+const addDept = () => {
+  inquirer
+    .prompt([
+      {
+        name: "deptInput",
+        type: "input",
+        message: "enter department name",
+      },
+    ])
+    .then(function (res) {
+      console.log(res);
+      const query = connection.query(
+        "INSERT INTO department_table SET ?",
+        {
+          name: res.deptInput,
+        },
+        function (err, res) {
+          if (err) throw err;
+          start();
+        }
+      );
+    });
+};
+
+//function adding new roles
+const addRole = () => {
+  inquirer
+    .prompt([
+      {
+        name: "title",
+        type: "input",
+        message: "enter title of role",
+      },
+      {
+        name: "salary",
+        type: "input",
+        message: "enter salary of role",
+      },
+      {
+        name: "department_id",
+        type: "input",
+        message: "enter department id of role",
+      },
+    ])
+    .then(function (res) {
+      console.log(res);
+      const query = connection.query(
+        "INSERT INTO role_table SET ?",
+        {
+          title: res.title,
+          salary: res.salary,
+          department_id: res.department_id,
+        },
+        function (err, res) {
+          if (err) throw err;
+          start();
+        }
+      );
+    });
 };
 
 //function adding a new employee to the table
@@ -135,11 +215,10 @@ const remEmp = () => {
       },
     ])
     .then(function (resRem) {
-      const query = `DELETE FROM employee_table WHERE ID = ${resRem.remInput}`;
-      console.log(query);
-      connection.query(query, { id: resRem.remInput }, (err, res) => {
+      console.log(resRem);
+      const query = `DELETE FROM employee_table WHERE id = ${resRem.remInput}`;
+      connection.query(query, function (err, resRem) {
         if (err) throw err;
-        console.log(`${resRem.remInput} has been deleted`);
         start();
       });
     });
