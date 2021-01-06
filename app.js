@@ -1,6 +1,8 @@
+//required npm packages
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 
+//server connection to mysql
 const connection = mysql.createConnection({
   host: "localhost",
 
@@ -12,6 +14,7 @@ const connection = mysql.createConnection({
   database: "emp_trackDB",
 });
 
+//beginning prompt for when you node this project
 const start = () => {
   inquirer
     .prompt({
@@ -58,6 +61,7 @@ const start = () => {
     });
 };
 
+//function for showing all employees
 const allEmp = () => {
   const query = "SELECT * FROM employee_table";
   connection.query(query, (err, res) => {
@@ -67,6 +71,7 @@ const allEmp = () => {
   });
 };
 
+//function for showing all employees based on department
 const allEmpDept = () => {
   const query = "SELECT * FROM employee_table GROUP BY department_id";
   connection.query(query, (err, resDe) => {
@@ -76,6 +81,7 @@ const allEmpDept = () => {
   });
 };
 
+//function adding a new employee to the table
 const addEmp = () => {
   inquirer
     .prompt([
@@ -101,7 +107,6 @@ const addEmp = () => {
       },
     ])
     .then(function (res) {
-      console.log("put a message here");
       console.log(res);
       const query = connection.query(
         "INSERT INTO employee_table SET ?",
@@ -119,6 +124,7 @@ const addEmp = () => {
     });
 };
 
+//function to remove an employee from the table
 const remEmp = () => {
   inquirer
     .prompt([
@@ -139,6 +145,7 @@ const remEmp = () => {
     });
 };
 
+//function to update an employee role_id
 const updEmpRole = () => {
   inquirer
     .prompt([
@@ -162,6 +169,7 @@ const updEmpRole = () => {
     });
 };
 
+//connection to start the project once node is inputted
 connection.connect((err) => {
   if (err) throw err;
   start();
