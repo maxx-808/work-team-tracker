@@ -24,6 +24,10 @@
 
 The homework was to create a database using node.js and MySQL to be able to track and record employees, their information, their roles, and the different departments and add, update or remove any of these things as well.
 
+## Demo Video:
+
+https://drive.google.com/file/d/1LOu4fvmLqn05lIJOY8PmSUlW0g0TtJGv/view?usp=sharing
+
 <a name="steps"></a>
 
 ## Steps:
@@ -63,8 +67,6 @@ You can contact me through:
 ## Github Profile:
 
 https://www.github.com/maxx-808
-
-## Github Deployable URL:
 
 ## Email Address:
 
